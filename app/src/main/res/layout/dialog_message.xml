@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="0.3"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/tvdTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/stringTitleDialog"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.4"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/tvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:text="@string/app_name"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btnOp1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textStyle="italic"
+                        android:text="Eliminar"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btnOp2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textStyle="italic"
+                        android:text="Cancelar"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    tools:context="com.zippyttech.animelist.view.activity.EditActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="202dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/ivPhot"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:src="@color/colorPrimaryDark"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tvEtitle"
+                    android:text="@string/app_name"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre:"/>
+
+                    <EditText
+                        android:id="@+id/etName"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:inputType="textPersonName"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="Nombre"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:text="Capitulo:"/>
+
+                    <EditText
+                        android:id="@+id/etCapitule"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:inputType="numberSigned"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="Capitulo"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="match_parent"
+                        android:text="Estado:"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:entries="@array/estados"
+                        android:enabled="false" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="match_parent"
+                        android:text="Imagen:"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:drawableEnd="@drawable/ic_doc_edit"
+                        android:inputType="textPersonName"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:enabled="false">
+
+                        <EditText
+                            android:id="@+id/etImage"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.7"
+                            android:inputType="textPersonName"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:layout_marginRight="2dp"
+                            android:text="seleccionar imagen"/>
+
+                        <ImageView
+                            android:id="@+id/ivImage"
+                            android:layout_weight="0.1"
+                            android:layout_width="0dp"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:layout_margin="3dp"
+                            android:src="@drawable/ic_doc_edit"/>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha:"/>
+
+                    <EditText
+                        android:id="@+id/etDate"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:inputType="textPersonName"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="fecha de creacion"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha2:"/>
+
+                    <EditText
+                        android:id="@+id/etDateUpdate"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:inputType="textPersonName"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="Fecha de actualizacion"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="match_parent"
+                        android:text="Color:"/>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7">
+
+                        <View
+                            android:id="@+id/vColor"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="0.6"
+                            android:background="@color/colorPrimary"/>
+                        <TextView
+                            android:id="@+id/tvColor"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.4"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:text="Color"/>
+
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/fab"
+                        android:background="@drawable/button_background_circular"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        android:textColor="@color/cvWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar"/>
+
+                    <Button
+                        android:id="@+id/fab2"
+                        android:background="@drawable/button_background_circular"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        android:textColor="@color/cvWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guardar"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

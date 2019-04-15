@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#55b53f</color>
+    <color name="colorPrimaryDark">#439f30</color>
+    <color name="colorAccent">#56ff40</color>
+
+    <color name="startDegrade">#56ff40</color>
+    <color name="centerDegrade">#4cc234</color>
+    <color name="endDegrade">#348623</color>
+
+    <!-- Colores personalizados del item -->
+    <color name="etClosed">#b10000</color>
+    <color name="etProgress">#17a900</color>
+    <color name="etPremiere">#a6a100</color>
+    <color name="etOldDate">#666666</color>
+
+    <color name="transparent">#00ffffff</color>
+    <color name="semiTrans">#71969696</color>
+    <color name="semiTrans2">#1f000000</color>
+
+    <color name="cvRed">#f77979</color>
+    <color name="cvBlue">#88a0ff</color>
+    <color name="cvYellow">#f5ff88</color>
+    <color name="cvWhite">#ffffff</color>
+    <color name="cvBlack">#707070</color>
+    <color name="cvGreen">#63be5e</color>
+    <color name="cvViolet">#b488ff</color>
+    <color name="cvOrange">#ffae88</color>
+    <color name="cvPink">#ff88d9</color>
+
+    <color name="hintGrey">#a5afafaf</color>
+    <color name="hintBlack">#a5000000</color>
+    <color name="hintBlue">#a58e9bce</color>
+
+    <color name="backStar">#afd0fcc7</color>
+    <color name="backCenter">#9692ba8a</color>
+    <color name="backEnd">#96576854</color>
+
+    <color name="backStar2">#d1ffffff</color>
+    <color name="backCenter2">#c1b1b1b1</color>
+    <color name="backEnd2">#c66b6b6b</color>
+
+    <color name="cvPosRed">#de0000</color>
+    <color name="cvPosBlue">#002fe7</color>
+    <color name="cvPosYellow">#cee100</color>
+    <color name="cvPosWhite">#b9b9b9</color>
+    <color name="cvPosBlack">#000000</color>
+    <color name="cvPosGreen">#008402</color>
+    <color name="cvPosViolet">#5600c6</color>
+    <color name="cvPosOrange">#dc4600</color>
+    <color name="cvPosPink">#c60084</color>
+
+</resources>
