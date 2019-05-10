@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.zippyttech.animelist.common.SyncService;
 import com.zippyttech.animelist.view.activity.NavigationActivity;
-import com.zippyttech.animelist.view.activity.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 

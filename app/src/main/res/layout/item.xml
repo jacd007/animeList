@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="0dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -12,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:backgroundTint="@color/cvYellow"
-        app:cardCornerRadius="7dp"
+        app:cardCornerRadius="5dp"
         tools:targetApi="lollipop">
 
         <LinearLayout
@@ -35,18 +36,39 @@
                     android:layout_marginVertical="3dp"
                     android:background="@drawable/background_text"/>
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/ivImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="3dp"
-                    android:layout_gravity="center"
-                    android:background="@color/cvWhite"
-                    android:elevation="5dp"
-                    app:srcCompat="@drawable/ic_no_image"
-                    android:contentDescription="@string/description_image"
-                    tools:ignore="VectorDrawableCompat" />
+                    <ImageView
+                        android:id="@+id/ivImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="center"
+                        android:background="@color/cvWhite"
+                        android:elevation="5dp"
+                        app:srcCompat="@drawable/ic_no_image"
+                        android:contentDescription="@string/description_image"
+                        tools:ignore="VectorDrawableCompat" />
+
+                    <TextView
+                        android:id="@+id/tvidA"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@color/semiTrans2"
+                        android:textColor="#ffff"
+                        android:layout_margin="3dp"
+                        android:paddingHorizontal="5dp"
+                        android:gravity="bottom"
+                        android:textSize="10dp"
+                        android:elevation="6dp"
+                        android:text="1234"/>
+
+                </RelativeLayout>
+
+
+
 
             </LinearLayout>
 

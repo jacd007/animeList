@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
     android:gravity="bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_margin="3dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
+        android:background="@color/colorPrimaryDark"
         android:orientation="vertical">
 
         <LinearLayout
@@ -85,8 +86,7 @@
                         android:layout_height="@dimen/nav_menu_item"
                         android:background="@drawable/button_background"
                         android:contentDescription="edit item"
-                        app:srcCompat="@drawable/ic_edit"
-                        tools:ignore="VectorDrawableCompat" />
+                        app:srcCompat="@drawable/ic_edit" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -100,8 +100,7 @@
                         android:layout_height="@dimen/nav_menu_item"
                         android:background="@drawable/button_background"
                         android:contentDescription="edit color"
-                        app:srcCompat="@drawable/ic_paint_color"
-                        tools:ignore="VectorDrawableCompat" />
+                        app:srcCompat="@drawable/ic_paint_color" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,8 +114,7 @@
                         android:layout_height="@dimen/nav_menu_item"
                         android:background="@drawable/button_background"
                         android:contentDescription="closed anime"
-                        app:srcCompat="@drawable/ic_doc_edit"
-                        tools:ignore="VectorDrawableCompat" />
+                        app:srcCompat="@drawable/ic_doc_edit" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -131,7 +129,7 @@
                         android:background="@drawable/button_background"
                         android:contentDescription="add one"
                         app:srcCompat="@drawable/ic_add_one"
-                        tools:ignore="VectorDrawableCompat" />
+                        />
                 </LinearLayout>
 
                 <LinearLayout

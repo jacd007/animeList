@@ -25,14 +25,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="202dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/cvWhite"
                     android:gravity="center">
 
                     <ImageView
                         android:id="@+id/ivPhot"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:src="@color/colorPrimaryDark"/>
+                        android:src="@drawable/ic_no_image"/>
 
                 </LinearLayout>
 
@@ -144,28 +144,50 @@
                         android:orientation="horizontal"
                         android:enabled="false">
 
+                        <ImageView
+                            android:id="@+id/ivImage"
+                            android:layout_weight="0.4"
+                            android:layout_width="0dp"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:elevation="6dp"
+                            android:padding="3dp"
+                            android:layout_margin="3dp"
+                            android:src="@drawable/ic_doc_edit"/>
+
                         <EditText
                             android:id="@+id/etImage"
                             android:layout_width="0dp"
-                            android:layout_weight="0.7"
+                            android:layout_weight="0.4"
                             android:inputType="textPersonName"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:layout_marginRight="2dp"
                             android:text="seleccionar imagen"/>
 
-                        <ImageView
-                            android:id="@+id/ivImage"
-                            android:layout_weight="0.1"
-                            android:layout_width="0dp"
-                            android:layout_gravity="center"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:layout_margin="3dp"
-                            android:src="@drawable/ic_doc_edit"/>
                     </LinearLayout>
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="match_parent"
+                        android:text="Proximo:"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerDays"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:entries="@array/days"
+                        android:enabled="false" />
 
                 </LinearLayout>
 

@@ -60,6 +60,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView ivImage;
     private TextView tvColo;
     private Spinner spnStatus;
+    private Spinner spnDays;
     private Button btnEdit;
     private Button btnSave;
 
@@ -69,6 +70,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private AnimesDB animesDB;
     private Animes animes;
     private ArrayAdapter<String> dataAdapter;
+    private ArrayAdapter<String> dataAdapter2;
 
     //PARAMETER DEFAULT LIST
     private int TYPE;
@@ -80,6 +82,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private String status;
     private String image;
     private String date;
+    private String day;
     private String date_update;
     private String color;
     private ArrayList<String> listStatus;
@@ -127,7 +130,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         enabled=false;
         animesDB = new AnimesDB(getBaseContext());
         listStatus = new ArrayList<>();
-        String[] srtStatus = new String[] {"En emisión","Finalizado","Olvidado"};
+        String[] srtStatus = new String[] {"En emisión","Finalizado","Estreno","Olvidado"};
+        String[] srtDays = new String[] {"Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"};
         list = new ArrayList<>();
 
         Bundle param = this.getIntent().getExtras();
@@ -152,10 +156,15 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         btnSave.setOnClickListener(this);
 
         spnStatus  = (Spinner) this.findViewById(R.id.spinnerStatus);
+        spnDays    = (Spinner) this.findViewById(R.id.spinnerDays);
 
         dataAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner, srtStatus);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_status);
         spnStatus.setAdapter(dataAdapter);
+
+        dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner, srtDays);
+        dataAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_item_status);
+        spnDays.setAdapter(dataAdapter2);
 
         if (param!=null){
             TYPE = param.getInt(setup.list.TYPE,0);
@@ -168,6 +177,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             cap = param.getInt(setup.list.CAPITULE,0);
             status = param.getString(setup.list.STATUS,"NoStatus");
             image = param.getString(setup.list.IMAGE,"null");
+            day = param.getString(setup.list.DAY,"Domingo");
             date = param.getString(setup.list.DATE_CREATED, Utils.dateFormatAll(setup.date.FORMAT));
             date_update = param.getString(setup.list.DATE_UPDATE,"null");
             color = param.getString(setup.list.COLOR,"amarillo");
@@ -184,6 +194,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             animes.setImage(image);
             animes.setDateCreated(date);
             animes.setDateUpdate(date_update);
+            animes.setDay(day);
             animes.setColor(color);
 
             etName.setText(name);
@@ -200,22 +211,29 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             Log.w(TAG, "\nid: "+animes.getId()+" name: "+animes.getName()+
                     " capitule: "+animes.getCapitule()+" status: "+animes.getStatus()+
                     " created: "+animes.getDateCreated()+" update: "+animes.getDateUpdate()+
-                    " color: "+animes.getColor()+"\n\nImage: "+animes.getImage()+ " = "
-                    +animes.getBtpImage()+"\n\n" );
+                    " color: "+animes.getColor()+"\n\nImage: "+animes.getImage()+ " = "+
+                    " day: "+animes.getDay()+animes.getBtpImage()+"\n\n" );
         }
 
         spnStatus.setOnItemSelectedListener(this);
+        spnDays.setOnItemSelectedListener(this);
         etName.setEnabled(enabled);
         etCapitule.setEnabled(enabled);
         spnStatus.setEnabled(enabled);
+        spnDays.setEnabled(enabled);
         ivImage.setEnabled(enabled);
 
         if (animes.getStatus().equals(getResources().getString(R.string.status_progress))){
             spnStatus.setSelection(0);
         }else if (animes.getStatus().equals(getResources().getString(R.string.status_finish))){
             spnStatus.setSelection(1);
-        }else {
+        }else if (animes.getStatus().equals(getResources().getString(R.string.status_premiere))){
             spnStatus.setSelection(2);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mColor("negro");
+            }
+        }else {
+            spnStatus.setSelection(3);
         }
 
         etImage.setText("");
@@ -270,6 +288,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 animes.setName(etName.getText().toString());
                 animes.setCapitule(Integer.parseInt(etCapitule.getText().toString()));
                 animes.setStatus(spnStatus.getSelectedItem().toString());
+                animes.setDay(spnDays.getSelectedItem().toString());
                 animes.setDateCreated(etDate.getText().toString());
                 animes.setDateUpdate(etDateUpdate.getText().toString());
                 animes.setColor(tvColo.getText().toString());
@@ -286,6 +305,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                     etCapitule.setTextColor(etCapitule.getContext().getResources().getColorStateList(R.color.hintBlue));
 
                 animes.setStatus(spnStatus.getSelectedItem().toString());
+                animes.setDay(spnDays.getSelectedItem().toString());
 
                 if (etDate.getText().toString().equals("null")){
                     if (animes.getDateUpdate().equals("null")){
@@ -558,9 +578,17 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
+        switch (parent.getId()){
+            case R.id.spinnerStatus:
+                animes.setStatus(spnStatus.getSelectedItem().toString());
+                Log.w("onItemSelected","status: "+spnStatus.getSelectedItem().toString());
+            break;
+            case R.id.spinnerDays:
+                animes.setDay(spnDays.getSelectedItem().toString());
+                Log.w("onItemSelected","Days: "+spnDays.getSelectedItem().toString());
+            break;
 //        Toast.makeText(this, ""+spnStatus.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-
+                }
 
     }
 

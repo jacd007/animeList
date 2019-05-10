@@ -4,7 +4,18 @@
     <string-array name="estados">
         <item>En emisión</item>
         <item>Finalizado</item>
+        <item>Estreno</item>
         <item>Olvidado</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Domingo</item>
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sabado</item>
     </string-array>
 
 </resources>

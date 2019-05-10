@@ -29,6 +29,7 @@ public class AnimesSchedule {
                     Anime.COLUMN_NAME_DATA_UPDATE + TEXT_TYPE + COMMA_SEP +
                     Anime.COLUMN_NAME_COLOR + TEXT_TYPE + COMMA_SEP +
                     Anime.COLUMN_NAME_IMAGE+ TEXT_TYPE + COMMA_SEP +
+                    Anime.COLUMN_NAME_DAY+ TEXT_TYPE + COMMA_SEP +
                     Anime.COLUMN_NAME_DELETED+ TEXT_TYPE + COMMA_SEP +
                     Anime.COLUMN_NAME_ENABLED + TEXT_TYPE +
                     ")";
@@ -59,6 +60,7 @@ public class AnimesSchedule {
         public static final String COLUMN_NAME_IMAGE = "image";
         public static final String COLUMN_NAME_DELETED= "deleted";
         public static final String COLUMN_NAME_ENABLED= "enabled";
+        public static final String COLUMN_NAME_DAY = "day";
 
     }
 

@@ -21,11 +21,18 @@ public abstract class setup {
     }
 
     public abstract class tools{
-        public static final String ENABLED="enabled";
+        public static final int TIME_THREAD = 3000;
+        public static final String ENABLED_BACK="backEnabled";
+        public static final String ENABLED_EMAIL="sendEmail";
+        public static final String ENABLED_MOVED="textMoved";
+        public static final String ENABLED_NOTIFICACION="notificacion";
+        public static final String ENABLED_TEXTSIZE="textSize";
+        public static final String ENABLED_ALL_ITEMS="AllItems";
     }
 
     public abstract class date{
         public static final String FORMAT="MMMM dd, yyyy HH:mm";
+        public static final String FORMAT_DAY="EEEE";
     }
     public abstract class list{
         public static final String TYPE="type";
@@ -40,6 +47,7 @@ public abstract class setup {
         public static final String IMAGE="image";
         public static final String CAPITULE="capitule";
         public static final String COLOR="color";
+        public static final String DAY="day";
 
     }
 }

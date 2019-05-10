@@ -253,6 +253,7 @@ public class AnimesDB {
                 item.setDateUpdate(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_DATA_UPDATE)));
                 item.setColor(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_COLOR)));
                 item.setImage(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_IMAGE)));
+                item.setDay(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_DAY)));
                 item.setDeleted(Boolean.parseBoolean(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_DELETED))));
                 item.setEnabled(Boolean.parseBoolean(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_ENABLED))));
                 Log.i(TAG, "getDB " + item.getName());
@@ -336,6 +337,7 @@ public class AnimesDB {
                    AnimesSchedule.Anime.COLUMN_NAME_DATA,
                    AnimesSchedule.Anime.COLUMN_NAME_COLOR,
                    AnimesSchedule.Anime.COLUMN_NAME_IMAGE,
+                   AnimesSchedule.Anime.COLUMN_NAME_DAY,
                    AnimesSchedule.Anime.COLUMN_NAME_DELETED,
                    AnimesSchedule.Anime.COLUMN_NAME_ENABLED,
            };
@@ -366,6 +368,7 @@ public class AnimesDB {
                 animes.setDateUpdate(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_DATA_UPDATE)));
                 animes.setColor(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_COLOR)));
                 animes.setImage(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_IMAGE)));
+                animes.setDay(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_DAY)));
                 animes.setDeleted(Boolean.parseBoolean(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_DELETED))));
                 animes.setEnabled(Boolean.parseBoolean(c.getString(c.getColumnIndex(AnimesSchedule.Anime.COLUMN_NAME_ENABLED))));
                 Log.i(TAG, "getDB " + animes.getName());
@@ -390,6 +393,7 @@ public class AnimesDB {
             String column_data_update = AnimesSchedule.Anime.COLUMN_NAME_DATA_UPDATE;
             String column_color = AnimesSchedule.Anime.COLUMN_NAME_COLOR;
             String column_image = AnimesSchedule.Anime.COLUMN_NAME_IMAGE;
+            String column_day = AnimesSchedule.Anime.COLUMN_NAME_DAY;
             String column_deleted = AnimesSchedule.Anime.COLUMN_NAME_DELETED;
             String column_enabled = AnimesSchedule.Anime.COLUMN_NAME_ENABLED;
             for (Animes anime
@@ -407,6 +411,7 @@ public class AnimesDB {
                 register.put(column_data_update, anime.getDateUpdate());
                 register.put(column_color, anime.getColor());
                 register.put(column_image, anime.getImage());
+                register.put(column_day, anime.getDay());
                 register.put(column_deleted, isdeleted);
                 register.put(column_enabled, isenabled);
                 insertRow(table_name, register);
@@ -428,6 +433,7 @@ public class AnimesDB {
             String column_data_update = AnimesSchedule.Anime.COLUMN_NAME_DATA_UPDATE;
             String column_color = AnimesSchedule.Anime.COLUMN_NAME_COLOR;
             String column_image = AnimesSchedule.Anime.COLUMN_NAME_IMAGE;
+            String column_day = AnimesSchedule.Anime.COLUMN_NAME_DAY;
             String column_deleted = AnimesSchedule.Anime.COLUMN_NAME_DELETED;
             String column_enabled = AnimesSchedule.Anime.COLUMN_NAME_ENABLED;
 
@@ -442,6 +448,7 @@ public class AnimesDB {
                 register.put(column_data_update, anime.getDateUpdate());
                 register.put(column_color, anime.getColor());
                 register.put(column_image, anime.getImage());
+                register.put(column_day,anime.getDay());
                 register.put(column_deleted, isdeleted);
                 register.put(column_enabled, isenabled);
                 insertRow(table_name, register);

@@ -9,14 +9,14 @@ import android.graphics.Bitmap;
 public class Animes {
     private int id, idAnime, capitule;
     private String name, subName, status, color;
-    private String dateCreated, dateUpdate, image;
+    private String dateCreated, dateUpdate, image, day;
     private boolean deleted, enabled;
     private Bitmap btpImage;
 
     public Animes(){
     }
     public Animes(int id, int idAnime, int capitule, String name, String subName,
-                  String status, String dateCreated, String dateUpdate, String color, String image) {
+                  String status, String dateCreated, String dateUpdate, String color, String image,String Day) {
         this.id = id;
         this.idAnime = idAnime;
         this.name = name;
@@ -27,6 +27,7 @@ public class Animes {
         this.capitule = capitule;
         this.color = color;
         this.image = image;
+        this.day = Day;
     }
 
     public boolean isDeleted() {
@@ -131,5 +132,13 @@ public class Animes {
 
     public void setBtpImage(Bitmap btpImage) {
         this.btpImage = btpImage;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

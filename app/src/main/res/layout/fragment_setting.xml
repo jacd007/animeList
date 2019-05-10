@@ -2,122 +2,173 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zippyttech.animelist.SettingFragment">
+    tools:context="com.zippyttech.animelist.view.fragment.SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
 
+        <!-- title -->
         <TextView
-            android:layout_weight="0.1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textSize="20sp"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textColor="@color/cvPosBlack"/>
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:text="@string/app_name"/>
 
         <LinearLayout
-            android:layout_weight="0.3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
-
-            <Switch
-                android:id="@+id/swEmail"
-                android:layout_margin="5dp"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Habilitar/Desabilitar Reporte de Errores: "
-                android:checked="true"
-                android:gravity="left"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="0.6"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
+            <!-- content -->
             <LinearLayout
-                android:layout_weight="0.2"
+                android:layout_weight="0.15"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_weight="0.1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                android:orientation="vertical">
+                <Switch
+                    android:id="@+id/swEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="@string/title_switch_email"/>
 
                 <TextView
-                    android:layout_weight="0.4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:layout_margin="5dp"
-                    android:textStyle="bold"/>
-
-                <Switch
-                    android:id="@+id/swTextName"
-                    android:layout_weight="0.3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:id="@+id/tvDescription1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="4"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/text_description_1"/>
 
                 <View
-                    android:layout_weight="0.2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/cvBlack"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="0.2"
+                android:layout_weight="0.15"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_weight="0.1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                android:orientation="vertical">
+                <Switch
+                    android:id="@+id/swTextMoved"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="@string/title_switch_moved"/>
 
                 <TextView
-                    android:layout_weight="0.3"
+                    android:id="@+id/tvDescription2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="4"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/description_2"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/cvBlack"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.15"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+                <Switch
+                    android:id="@+id/swNotification"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="@string/title_switch_notificacion"/>
+
+                <TextView
+                    android:id="@+id/tvDescription3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="4"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/description_3"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/cvBlack"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.15"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+                <Switch
+                    android:id="@+id/swTextSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="Habilitar / Desabilitar  Multi-linea"/>
+
+                <TextView
+                    android:id="@+id/tvDescription4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="4"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/app_name"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/cvBlack"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.15"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:layout_margin="5dp"
-                    android:textStyle="bold"/>
+                    android:text="@string/app_name"/>
 
                 <EditText
                     android:id="@+id/etContent"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.5"
                     android:layout_width="0dp"
-                    android:enabled="true"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
-
-                <View
-                    android:layout_weight="0.2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:enabled="false"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
-
-            <View
-                android:layout_weight="0.6"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"/>
+            <!-- content -->
 
         </LinearLayout>
 
 
+
+
+
     </LinearLayout>
+
 
 </FrameLayout>

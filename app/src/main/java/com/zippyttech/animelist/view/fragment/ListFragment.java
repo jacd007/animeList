@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -64,6 +67,7 @@ public class ListFragment extends Fragment  {
     public static rvAdapter adapter;
     private String FORMATE_DAY;
     private AnimesDB animesDB;
+    private SwipeRefreshLayout refreshLayout;
 
 
     public ListFragment() {
@@ -152,6 +156,22 @@ public class ListFragment extends Fragment  {
         animes = new ArrayList<>();
         tvSize = (TextView) view.findViewById(R.id.tvSize);
         rv = (RecyclerView) view.findViewById(R.id.rvList);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+
+        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.refresh),getResources().getColor(R.color.refresh1));
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(true);
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.changeDataItem(animesDB.getAnimes());
+                        refreshLayout.setRefreshing(false);
+                    }
+                },setup.tools.TIME_THREAD);
+            }
+        });
     }
 
 

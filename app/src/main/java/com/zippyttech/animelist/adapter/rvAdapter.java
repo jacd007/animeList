@@ -54,6 +54,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
     private final ImageView ivImage;
     private CardView cvItem;
     private TextView tvName;
+    private TextView tvId;
     private TextView tvDateCreated;
     private TextView tvCapitule;
     private TextView tvStatus;
@@ -78,7 +79,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         tvStatus = (TextView) itemView.findViewById(R.id.tvStatus);
         ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
         vPosColor = (View) itemView.findViewById(R.id.vPostColor);
-
+        tvId = (TextView) itemView.findViewById(R.id.tvidA);
 
 
         itemView.setOnClickListener(this);
@@ -88,13 +89,13 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setData(Context context, int Id, int IdAnime, int Capitule, String Name, String SubName,
-                        String Status, String DateCreated, String DateUpdate, String Color, String image)
+                        String Status, String DateCreated, String DateUpdate, String Color,String Days, String image)
                                         throws MalformedURLException {
         settings = context.getSharedPreferences(SHARED_KEY, 0);
         editor = settings.edit();
 
-        tvName.setSingleLine(settings.getBoolean(setup.general.AnimateText,true));
-        tvName.setSelected(settings.getBoolean(setup.general.AnimateText,true));
+        tvName.setSingleLine(settings.getBoolean(setup.tools.ENABLED_TEXTSIZE,true));
+        tvName.setSelected(settings.getBoolean(setup.tools.ENABLED_MOVED,false));
 
         int id = Id;
         int idAnime = IdAnime;
@@ -105,6 +106,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         String dateCreated = TextUtils.isEmpty(DateCreated) || DateCreated.equals("null") ? "N/A" : DateCreated;
         String dateUpdate = TextUtils.isEmpty(DateUpdate) || DateUpdate.equals("null") ? "N/A" : DateUpdate;
         String color = TextUtils.isEmpty(Color) || Color.equals("null") ? "f5ff88" : Color;
+        String days = TextUtils.isEmpty(Days) || Days.equals("null") ? "N/A" : Days;
 
 //        Log.w("setData","Imagen #"+id+": "+image);
         setImage(context,image,ivImage);
@@ -233,32 +235,44 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
                             getColorStateList(R.color.cvPosYellow));
                     break;
             }
-            Log.w("rvAdapter","Animes:"+" "+id+" "+name+" "+status+" "+dateUpdate );
+            Log.w("rvAdapter","Animes:"+" -- "+id+" -- "+name+" -- "+status+" -- "+dateUpdate+" -- "+days );
 
             tvName.setText(""+name);
             tvCapitule.setText(""+capitule);
             tvStatus.setText(""+status);
             tvDateCreated.setText(""+dateUpdate);
+            tvId.setText(""+id);
 
+            if (settings.getBoolean(setup.tools.ENABLED_ALL_ITEMS,false)){
+                tvId.setVisibility(View.VISIBLE);
+            }else {
+                tvId.setVisibility(View.GONE);
+            }
 
     }
 
     private void setImage(Context context, String mImage, ImageView imageuser){
         try {
-               if (!mImage.substring(0,4).equals("http")) {
-                   if (!mImage.substring(0,23).equals("data:image/jpeg;base64,")){
-                       mImage = context.getResources().getString(R.string.image_complement) + mImage;
-                   }
+            if (!mImage.equals("null")) {
+                if (!mImage.substring(0, 4).equals("http")) {
+                    if (!mImage.substring(0, 23).equals("data:image/jpeg;base64,")) {
+                        mImage = context.getResources().getString(R.string.image_complement) + mImage;
+                    }
                     Bitmap bitmap = UtilsImage.b64ToBitmap(mImage);
                     imageuser.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 400, 400, false));
-               }else {
-                   Glide.with(context)
-                                .load(mImage)
-                                .placeholder(R.drawable.ic_broken_image)
-                                .error(R.drawable.ic_no_image)
-                                .into(imageuser);
-               }
-
+                } else {
+                    Glide.with(context)
+                            .load(mImage)
+                            .placeholder(R.drawable.ic_broken_image)
+                            .error(R.drawable.ic_no_image)
+                            .into(imageuser);
+                }
+            }else {
+                Glide.with(context)
+                        .load("xxxx")
+                        .error(R.drawable.ic_no_image)
+                        .into(imageuser);
+            }
         }catch (VerifyError e){
             imageuser.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_no_image));
             e.printStackTrace();
@@ -347,6 +361,7 @@ public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
                     listData.get(position).getDateCreated(),
                     listData.get(position).getDateUpdate(),
                     listData.get(position).getColor(),
+                    listData.get(position).getDay(),
                     listData.get(position).getImage());
 
         } catch (Exception e) {
@@ -459,7 +474,7 @@ public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         final String msgEnd = context.getResources().getString(R.string.status_finish);
         final String msgOld = context.getResources().getString(R.string.status_old);
         final String msgPrem = context.getResources().getString(R.string.status_premiere);
-        Log.w(TAG,"ESTADO: "+estado+" = "+msgPro);
+        Log.w(TAG,"ESTADO: "+estado+" = "+msgEnd);
 
         if (!estado.equals("N/A")) {
             if (estado.equals(msgPro)) {
@@ -471,6 +486,15 @@ public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
             } else {
                 btnStatus.setImageResource(R.drawable.ic_doc_old);
             }
+
+            if (estado.equals(msgEnd)) {
+               btnAddCap.setVisibility(View.INVISIBLE);
+               btnSustractCap.setVisibility(View.INVISIBLE);
+            } else{
+                btnAddCap.setVisibility(View.VISIBLE);
+                btnSustractCap.setVisibility(View.VISIBLE);
+            }
+
         }
 
         if (animes.getCapitule()<0){
@@ -530,6 +554,15 @@ public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
                     animes.setStatus(msgPro);
                     msg=msgOld;
                 }
+
+                if (animes.getStatus().equals(msgEnd)) {
+                    btnAddCap.setVisibility(View.INVISIBLE);
+                    btnSustractCap.setVisibility(View.INVISIBLE);
+                } else{
+                    btnAddCap.setVisibility(View.VISIBLE);
+                    btnSustractCap.setVisibility(View.VISIBLE);
+                }
+
                 Toast.makeText(context, animes.getName()+", está: "+animes.getStatus(), Toast.LENGTH_SHORT).show();
                 listData.set(position,animes);
                 lis.add(animes);

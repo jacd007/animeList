@@ -27,6 +27,7 @@
                         android:layout_margin="3dp"
                         android:textSize="15sp"
                         android:textStyle="bold"
+                        android:textColor="@color/cvWhite"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Imagen"/>
@@ -36,6 +37,7 @@
                         android:layout_margin="3dp"
                         android:textSize="15sp"
                         android:textStyle="bold"
+                        android:textColor="@color/cvWhite"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Titulo, estado y fecha"/>
@@ -45,6 +47,7 @@
                         android:layout_height="match_parent"
                         android:text="Capitulo"
                         android:textSize="15sp"
+                        android:textColor="@color/cvWhite"
                         android:textStyle="bold"
                         android:layout_margin="3dp"
                         android:gravity="end|center" />
@@ -54,10 +57,19 @@
                     android:layout_weight="0.97"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvList"
+
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/swipeRefresh"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    </android.support.v4.widget.SwipeRefreshLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,6 +82,7 @@
                         android:id="@+id/tvSize"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/cvWhite"
                         android:textAlignment="center"
                         android:text="text"/>
                 </LinearLayout>

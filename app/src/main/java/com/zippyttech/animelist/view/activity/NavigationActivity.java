@@ -1,5 +1,6 @@
 package com.zippyttech.animelist.view.activity;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,9 +35,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.zippyttech.animelist.R;
-import com.zippyttech.animelist.SettingFragment;
+import com.zippyttech.animelist.view.fragment.SettingFragment;
 import com.zippyttech.animelist.common.utility.SendEmail;
-import com.zippyttech.animelist.common.utility.Utils;
 import com.zippyttech.animelist.common.utility.setup;
 import com.zippyttech.animelist.data.AnimesDB;
 import com.zippyttech.animelist.model.Animes;
@@ -155,6 +155,8 @@ public class NavigationActivity extends AppCompatActivity
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
         }
+
+
     }
 
 //    @Override
@@ -173,7 +175,13 @@ public class NavigationActivity extends AppCompatActivity
             return;
         }
         else {
-            Toast.makeText(getBaseContext(), "Doble click para salir...", Toast.LENGTH_SHORT).show(); }
+            if (settings.getBoolean(setup.tools.ENABLED_BACK,false)){
+                finish();
+            }else {
+                setFragment(1);
+                Toast.makeText(getBaseContext(), "Doble click para salir...", Toast.LENGTH_SHORT).show();
+            }
+           }
 
         mBackPressed = System.currentTimeMillis();
     }
@@ -322,7 +330,17 @@ public class NavigationActivity extends AppCompatActivity
             Log.e("Error", "e: " + e);
         }
     }
+    @SuppressLint("RestrictedApi")
     public void setFragment(int position) {
+        if (position==1){
+            editor.putBoolean(setup.tools.ENABLED_BACK,true);
+            editor.commit();
+            fab.setVisibility(View.VISIBLE);
+        }else {
+            editor.putBoolean(setup.tools.ENABLED_BACK,false);
+            editor.commit();
+            fab.setVisibility(View.GONE);
+        }
         android.support.v4.app.FragmentManager fragmentManager;
         FragmentTransaction fragmentTransaction;
 

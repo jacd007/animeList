@@ -17,6 +17,7 @@
     <color name="transparent">#00ffffff</color>
     <color name="semiTrans">#71969696</color>
     <color name="semiTrans2">#1f000000</color>
+    <color name="semi_trans2">#1f000000</color>
 
     <color name="cvRed">#f77979</color>
     <color name="cvBlue">#88a0ff</color>
@@ -49,5 +50,9 @@
     <color name="cvPosViolet">#5600c6</color>
     <color name="cvPosOrange">#dc4600</color>
     <color name="cvPosPink">#c60084</color>
+
+    <color name="refresh">#cee100</color>
+    <color name="refresh1">#00e100</color>
+
 
 </resources>
