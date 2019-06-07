@@ -1,140 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv_item"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="170dp"
+        android:layout_height="200dp"
         android:layout_margin="5dp"
         android:backgroundTint="@color/cvYellow"
-        app:cardCornerRadius="7dp"
+        app:cardCornerRadius="5dp"
         tools:targetApi="lollipop">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="3dp"
-            android:orientation="horizontal">
-
+            android:orientation="vertical">
+            
             <LinearLayout
-                android:layout_weight="0.01"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/vPostColor"
-                    android:layout_width="4dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/background_text"/>
-
-
-                <ImageView
-                    android:id="@+id/ivImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="3dp"
-                    android:layout_gravity="center"
-                    android:background="@color/cvWhite"
-                    android:elevation="5dp"
-                    app:srcCompat="@drawable/ic_no_image"
-                    android:contentDescription="@string/description_image"
-                    tools:ignore="VectorDrawableCompat" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_weight="0.85"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.98"
-                android:orientation="vertical">
+                android:layout_height="0dp">
 
-                <LinearLayout
-                    android:layout_weight="0.1"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/tvTitle"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/ivImage"
+                        android:layout_width="190dp"
+                        android:layout_height="150dp"
+                        android:foregroundGravity="center"
+                        android:src="@drawable/ic_no_image"
+                         />
+
+                    <View
+                        android:layout_width="170dp"
+                        android:layout_height="150dp"
+                        android:background="@color/trans_white"/>
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
+                        android:id="@+id/vPostColor"
+                        android:layout_margin="4dp"
+                        android:background="@color/colorPrimary"/>
+
+                    <ImageView
+                        android:id="@+id/ivImage2"
+                        android:layout_width="130dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_broken_image" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:scrollbars="vertical"
-                        android:lines="2"
-                        android:minLines="1"
-                        android:maxLines="3"
-                        android:shadowColor="#f2f2f2"
-                        android:textColor="#000000"
-                        android:text="@string/title_name_anime"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:layout_height="150dp"
+                        android:gravity="bottom">
 
-                <LinearLayout
-                    android:layout_weight="0.9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tvTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:textColor="@color/cvWhite"
+                            android:textAlignment="center"
+                            android:background="@color/hintBlack"
+                            android:text="@string/description_image" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvData"
-                        android:layout_weight="0.7"
-                        android:gravity="center"
-                        android:textSize="13sp"
-                        android:textStyle="italic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/title_date_created"/>
 
-                    <TextView
-                        android:id="@+id/tvStatus"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
-                        android:textStyle="bold|italic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingVertical="5dp"
-                        android:background="@drawable/background_text2"
-                        android:textColor="#000000"
-                        android:text="@string/title_status_anime"/>
 
-                </LinearLayout>
+                </RelativeLayout>
+
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.01"
+                android:layout_gravity="center"
+                android:layout_weight="0.15"
                 android:orientation="vertical"
-                >
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
                 <TextView
                     android:id="@+id/tvCap"
+                    android:layout_weight="0.25"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:gravity="end|top"
-                    android:textSize="20dp"
-                    android:singleLine="true"
-                    android:text="@string/title_capitule"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    tools:ignore="SpUsage,UnusedAttribute" />
+                    android:layout_height="0dp"
+                    android:textColor="@color/cvWhite"
+                    android:textAlignment="center"
+                    android:text="@string/cap"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvStatus"
+                    android:layout_weight="0.25"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textAlignment="center"
+                    android:text="@string/status_premiere"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvData"
+                    android:layout_weight="0.25"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textAlignment="center"
+                    android:text="@string/default_date"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvDay"
+                    android:layout_weight="0.25"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textAlignment="center"
+                    android:text="@string/default_data"/>
+
 
             </LinearLayout>
-
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
 </LinearLayout>

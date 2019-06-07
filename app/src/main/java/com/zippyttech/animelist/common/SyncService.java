@@ -22,6 +22,7 @@ import com.zippyttech.animelist.common.utility.UtilsDate;
 import com.zippyttech.animelist.common.utility.setup;
 import com.zippyttech.animelist.data.AnimesDB;
 import com.zippyttech.animelist.model.Animes;
+import com.zippyttech.animelist.view.activity.NavigationActivity;
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ import static android.content.ContentValues.TAG;
 import static java.lang.Thread.sleep;
 
 public class SyncService extends Service {
-    private final int TIME_SYNC = 1200000;
-//    private final int TIME_SYNC = 2000;
+//    private final int TIME_SYNC = 8 * 60 * 60 * 1000;
+    private final int TIME_SYNC = 15000;
 
     private String url_weather="http://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&APPID=44d8a60f7707ec918da8c1123c521ab1";
     private String url_news="https://lanacionweb.com/wp-json/wp/v2/posts";
@@ -111,7 +112,7 @@ public class SyncService extends Service {
                             String auxDay = a.getDay().toLowerCase();
                             Log.w(TAG,"ANIME: "+a.getName()+" -> "+auxDay+" = "+DAY+ " STATUS: "+a.getStatus());
 
-                            if (!a.getStatus().equals(context.getResources().getString(R.string.status_finish)) ||
+                            if (!a.getStatus().equals(context.getResources().getString(R.string.status_finish)) &&
                                     !a.getStatus().equals(context.getResources().getString(R.string.status_premiere))){
                                         if (DAY.equals(auxDay)){
                                             throudNotificacion(a.getId(),a.getName(),a.getDay());
@@ -175,23 +176,25 @@ public class SyncService extends Service {
     public void throudNotificacion(int cont, String contentText, String ticker){
 
         Intent intent = new Intent(this, SyncNotification.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, NavigationActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         Uri sonido = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // Build notification
         // Actions are just fake
         Notification noti = new Notification.Builder(this)
                 .setContentTitle(getResources().getString(R.string.app_name))
-                .setContentText(contentText).setSmallIcon(R.drawable.ic_computer_black)
-                .setContentIntent(pIntent)
+                .setContentText(contentText).setSmallIcon(R.drawable.ic_wallpaper_black)
+                .setContentIntent(contentIntent)
                 .setTicker(ticker)
-                .setContentInfo(""+cont)
+                .setContentInfo(""+1)
                 .setSound(sonido)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         // hide the notification after its selected
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
-        notificationManager.notify(0, noti);
+        notificationManager.notify(cont, noti);
     }
 
 }

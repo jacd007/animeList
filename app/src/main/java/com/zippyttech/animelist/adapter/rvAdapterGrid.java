@@ -2,13 +2,11 @@ package com.zippyttech.animelist.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.ViewDragHelper;
@@ -29,13 +27,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zippyttech.animelist.view.activity.ChangeDataActivity;
+import com.zippyttech.animelist.R;
+import com.zippyttech.animelist.common.ItemClickAnimes;
+import com.zippyttech.animelist.common.utility.Utils;
 import com.zippyttech.animelist.common.utility.UtilsDate;
 import com.zippyttech.animelist.common.utility.UtilsImage;
-import com.zippyttech.animelist.R;
-import com.zippyttech.animelist.common.utility.Utils;
-import com.zippyttech.animelist.data.AnimesDB;
-import com.zippyttech.animelist.common.ItemClickAnimes;
 import com.zippyttech.animelist.common.utility.setup;
+import com.zippyttech.animelist.data.AnimesDB;
 import com.zippyttech.animelist.model.Animes;
 import com.zippyttech.animelist.view.activity.NavigationActivity;
 
@@ -46,13 +44,14 @@ import java.util.List;
 /**
  * Created by zippyttech on 27/10/18.
  */
-class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
+class RVHolderGrid extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
 
     private static final String SHARED_KEY = "shared_key";
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
 
     private final ImageView ivImage;
+    private final ImageView ivImage2;
     private CardView cvItem;
     private TextView tvName;
     private TextView tvId;
@@ -71,7 +70,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
      */
 
     @SuppressLint("CutPasteId")
-    public RecyclerViewHolder(View itemView, AppCompatActivity act) {
+    public RVHolderGrid(View itemView, AppCompatActivity act) {
         super(itemView);
 
         cvItem = (CardView) itemView.findViewById(R.id.cv_item);
@@ -80,6 +79,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         tvCapitule = (TextView) itemView.findViewById(R.id.tvCap);
         tvStatus = (TextView) itemView.findViewById(R.id.tvStatus);
         ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
+        ivImage2 = (ImageView) itemView.findViewById(R.id.ivImage2);
         vPosColor = (View) itemView.findViewById(R.id.vPostColor);
         tvId = (TextView) itemView.findViewById(R.id.tvidA);
         tvDays = (TextView) itemView.findViewById(R.id.tvDay);
@@ -96,18 +96,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
                                         throws MalformedURLException {
         settings = context.getSharedPreferences(SHARED_KEY, 0);
         editor = settings.edit();
-        List<Animes> list = new ArrayList<>();
-        Animes a = new Animes();
-        a.setId(Id);
-        a.setCapitule(Capitule);
-        a.setName(Name);
-        a.setStatus(Status);
-        a.setDateCreated(DateCreated);
-        a.setDateUpdate(DateUpdate);
-        a.setColor(Color);
-        a.setDay(Days);
-        a.setImage(image);
-        list.add(a);
+
         tvName.setSingleLine(settings.getBoolean(setup.tools.ENABLED_TEXTSIZE,true));
         tvName.setSelected(settings.getBoolean(setup.tools.ENABLED_MOVED,false));
 
@@ -124,7 +113,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
 //        Log.w("setData","Imagen #"+id+": "+image);
         setImage(context,image,ivImage);
-//        stadOld(context , list);
+        setImage(context,image,ivImage2);
 
         String auxDate = UtilsDate.changeData(dateUpdate,setup.date.FORMAT,setup.date.FORMAT_SHORT);
         String today = UtilsDate.dateFormatAll(setup.date.FORMAT_SHORT);
@@ -143,45 +132,45 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 //        Picasso.get().load(image).placeholder(R.drawable.ic_broken_image).error(R.drawable.ic_no_image).into(ivImage);
         switch (status) {
             case "En emisión":
-                tvStatus.setTextColor(tvStatus.getContext().getResources().
-                        getColorStateList(R.color.etProgress));
-                tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.cvPosBlack));
-                tvCapitule.setTextColor(tvCapitule.getContext().getResources().getColor(R.color.cvPosBlack));
-                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.cvPosBlack));
+//                tvStatus.setTextColor(tvStatus.getContext().getResources().
+//                        getColorStateList(R.color.etProgress));
+                tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.cvWhite));
+//                tvCapitule.setTextColor(tvCapitule.getContext().getResources().getColor(R.color.cvWhite));
+//                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.cvWhite));
                 tvName.setSelected(true);
-                tvDays.setVisibility(View.VISIBLE);
-                tvCapitule.setVisibility(View.VISIBLE);
+//                tvDays.setVisibility(View.VISIBLE);
+//                tvCapitule.setVisibility(View.VISIBLE);
                 break;
             case "Finalizado":
-                tvStatus.setTextColor(tvStatus.getContext().getResources().
-                        getColorStateList(R.color.etClosed));
-                tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.semiTrans2));
-                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.semiTrans2));
+//                tvStatus.setTextColor(tvStatus.getContext().getResources().
+//                        getColorStateList(R.color.etClosed));
+                tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.cvPosRed));
+//                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.semiTrans2));
                 tvName.setSelected(false);
-                tvDays.setVisibility(View.GONE);
-                tvCapitule.setVisibility(View.GONE);
+//                tvDays.setVisibility(View.GONE);
+//                tvCapitule.setVisibility(View.GONE);
 
                 break;
             case "Estreno":
-                tvStatus.setTextColor(tvStatus.getContext().getResources().
-                        getColorStateList(R.color.etPremiere));
+//                tvStatus.setTextColor(tvStatus.getContext().getResources().
+//                        getColorStateList(R.color.etPremiere));
                 tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.etPremiere));
-                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.semiTrans2));
+//                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.semiTrans2));
                 tvName.setSelected(true);
                 tvName.setSelected(false);
-                tvDays.setVisibility(View.GONE);
-                tvCapitule.setVisibility(View.GONE);
+//                tvDays.setVisibility(View.GONE);
+//                tvCapitule.setVisibility(View.GONE);
 
                 break;
             case "Olvidado":
-                tvStatus.setTextColor(tvStatus.getContext().getResources().
-                        getColorStateList(R.color.etOldDate));
-                tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.semiTrans2));
-                tvCapitule.setTextColor(tvCapitule.getContext().getResources().getColor(R.color.semiTrans2));
-                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.etClosed));
+//                tvStatus.setTextColor(tvStatus.getContext().getResources().
+//                        getColorStateList(R.color.etOldDate));
+                tvName.setTextColor(tvName.getContext().getResources().getColor(R.color.cvPosRed));
+//                tvCapitule.setTextColor(tvCapitule.getContext().getResources().getColor(R.color.semiTrans2));
+//                tvDateCreated.setTextColor(tvDateCreated.getContext().getResources().getColor(R.color.etClosed));
                 tvName.setSelected(false);
-                tvDays.setVisibility(View.VISIBLE);
-                tvCapitule.setVisibility(View.VISIBLE);
+//                tvDays.setVisibility(View.VISIBLE);
+//                tvCapitule.setVisibility(View.VISIBLE);
 
                 break;
         }
@@ -285,15 +274,6 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
     }
 
-    private void stadOld(Context context, List<Animes> list) {
-        if (UtilsDate.differencesDate(list.get(0).getDateCreated(),list.get(0).getDateUpdate())>9 ){
-            Animes a = list.get(0);
-            a.setStatus(context.getResources().getString(R.string.status_old));
-            list = new ArrayList<>();
-            list.add(a);
-        }
-    }
-
     private static String textDate(int dias,String date){
 
         if (dias==0){
@@ -372,7 +352,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
     }
 }
 
-public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class rvAdapterGrid extends RecyclerView.Adapter<RVHolderGrid> {
 
     private static final String TAG="rvAdapterGrid";
     private static final String SHARED_KEY = "shared_key";
@@ -393,7 +373,7 @@ public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
      * @param c
      */
 
-    public rvAdapter(List<Animes> s, Context c, TextView tvcont) {
+    public rvAdapterGrid(List<Animes> s, Context c, TextView tvcont) {
         context = c;
         listData = s;
         Actividad = acti;
@@ -402,22 +382,22 @@ public class rvAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         settings = c.getSharedPreferences(SHARED_KEY,0);
         editor = settings.edit();
     }
-    public rvAdapter( Context c) {
+    public rvAdapterGrid(Context c) {
         context = c;
     }
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RVHolderGrid onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.item, parent, false);
+        View itemView = inflater.inflate(R.layout.item_grid, parent, false);
 
-        return new RecyclerViewHolder(itemView, Actividad);
+        return new RVHolderGrid(itemView, Actividad);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(final RVHolderGrid holder, int position) {
 /* context, Id, IdAnime, Capitule, Name, SubName,
    Status, DateCreated, DateUpdate, Color, Days, image*/
         tvCont.setText("Items: "+getItemCount());

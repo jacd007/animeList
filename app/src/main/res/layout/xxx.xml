@@ -13,7 +13,8 @@
             android:layout_weight="0.1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
-            <TextView
+            <EditText
+                android:id="@+id/edItemTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAlignment="center"
@@ -27,10 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <ImageView
+                android:id="@+id/ivItemImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_list"/>
+                android:src="@drawable/ic_no_image"/>
         </LinearLayout>
 
         <!--  -->
@@ -50,9 +52,10 @@
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:layout_height="match_parent"
-                    android:text="@string/app_name"/>
+                    android:text="Capitulo:"/>
 
                 <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spnItemCap"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
@@ -73,9 +76,10 @@
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:layout_height="match_parent"
-                    android:text="@string/app_name"/>
+                    android:text="Estado:"/>
 
                 <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spnItemStatus"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
@@ -96,9 +100,10 @@
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:layout_height="match_parent"
-                    android:text="@string/app_name"/>
+                    android:text="Proximo Episodio:"/>
 
                 <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spnItemNextDay"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
@@ -119,9 +124,10 @@
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:layout_height="match_parent"
-                    android:text="@string/app_name"/>
+                    android:text="Color:"/>
 
                 <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spnItemColor"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
@@ -138,18 +144,20 @@
                 android:layout_height="0dp">
 
                 <TextView
+                    android:id="@+id/tvDateCr"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:layout_height="match_parent"
-                    android:text="@string/app_name"/>
+                    android:text="F. Creado"/>
 
                 <TextView
+                    android:id="@+id/tvDateUp"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:layout_height="match_parent"
-                    android:text="@string/app_name"/>
+                    android:text="F. Editado"/>
 
             </LinearLayout>
 
@@ -161,21 +169,29 @@
             android:layout_weight="0.1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="bottom">
+            android:gravity="center">
 
             <Button
+                android:id="@+id/btnItemSave"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/cvPosGreen"
+                android:background="@drawable/button_background_circular"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"/>
+                android:text="Guardar"/>
 
             <Button
+                android:id="@+id/btnItemCancel"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/cvPosRed"
+                android:background="@drawable/button_background_circular_x"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"/>
+                android:text="Cancelar Edición"/>
 
         </LinearLayout>
 

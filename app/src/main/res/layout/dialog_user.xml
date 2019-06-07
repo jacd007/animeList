@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5c000000"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:cardCornerRadius="5dp"
+            android:elevation="4dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="6dp"
+            tools:targetApi="lollipop">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="#fff"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvDtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:text="@string/app_name"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:textColor="#000223"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.4"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvDUser"
+                        android:layout_weight="0.35"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:text="Usuario:"
+                        android:textColor="#000"
+                        tools:targetApi="o" />
+                    <EditText
+                        android:id="@+id/etDUser"
+                        android:layout_weight="0.65"
+                        android:layout_width="0dp"
+                        android:paddingHorizontal="3dp"
+                        android:hint="example name"
+                        android:textSize="17sp"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.4"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvDMessage"
+                        android:layout_weight="0.35"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:text="E-Mail:"
+                        android:textColor="#000"
+                        tools:targetApi="o" />
+                    <EditText
+                        android:id="@+id/etForgotEmail"
+                        android:layout_weight="0.65"
+                        android:layout_width="0dp"
+                        android:paddingHorizontal="3dp"
+                        android:hint="example@domain.com"
+                        android:textSize="17sp"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.3"
+                    android:padding="5dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnDAceptar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="Aceptar"
+                        android:textSize="17sp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/button_background_circular"
+                        android:layout_marginEnd="10dp"
+                        tools:ignore="ButtonStyle,NestedWeights" />
+
+                    <Button
+                        android:id="@+id/btnDCancelar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="Cancelar"
+                        android:textSize="17sp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/button_background_circular_x"
+                        tools:ignore="ButtonStyle"
+                        android:layout_marginStart="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</LinearLayout>

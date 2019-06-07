@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -24,7 +25,9 @@ import android.widget.TextView;
 
 import com.zippyttech.animelist.R;
 import com.zippyttech.animelist.adapter.rvAdapter;
+import com.zippyttech.animelist.adapter.rvAdapterGrid;
 import com.zippyttech.animelist.common.utility.Utils;
+import com.zippyttech.animelist.common.utility.UtilsDate;
 import com.zippyttech.animelist.common.utility.setup;
 import com.zippyttech.animelist.data.AnimesDB;
 import com.zippyttech.animelist.model.Animes;
@@ -64,10 +67,13 @@ public class ListFragment extends Fragment  {
     private Animes a;
     private TextView tvSize;
     private LinearLayoutManager llm;
+    private GridLayoutManager glm;
     public static rvAdapter adapter;
+    public static rvAdapterGrid adapter2;
     private String FORMATE_DAY;
     private AnimesDB animesDB;
     private SwipeRefreshLayout refreshLayout;
+    private boolean GridType;
 
 
     public ListFragment() {
@@ -104,7 +110,12 @@ public class ListFragment extends Fragment  {
     @Override
     public void onStop() {
         super.onStop();
-        adapter.updateDataItem();
+        if (GridType){
+            adapter2.updateDataItem();
+        }else {
+            adapter.updateDataItem();
+        }
+
     }
 
     @Override
@@ -131,25 +142,41 @@ public class ListFragment extends Fragment  {
         a.setColor("amarillo");
         animes.add(a);
         animesDB.setAnimes(animes);
+
         print(animes);
     }
 
     public void print(List<Animes> LISTA){
-        llm = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(llm);
-        Log.w(TAG,"Nro. ITEMS: "+LISTA.size());
-        adapter = new rvAdapter(LISTA,getContext(),tvSize);
-        rv.setAdapter(adapter);
-        String msg;
-        msg = "Total de Animes: " + LISTA.size();
-        tvSize.setText(msg);
-        editor.putString(setup.general.adapter,""+rv.getAdapter().toString());
-        editor.commit();
+        if (settings.getBoolean(setup.tools.ITEM_TYPE,false)){
+            glm = new GridLayoutManager(getContext(),2);//GRID
+            rv.setLayoutManager(glm);
+            Log.w(TAG,"Nro. ITEMS: "+LISTA.size());
+            adapter2 = new rvAdapterGrid(LISTA,getContext(),tvSize);
+            rv.setAdapter(adapter2);
+            String msg;
+            msg = "Total de Animes: " + LISTA.size();
+            tvSize.setText(msg);
+            editor.putString(setup.general.adapter,""+rv.getAdapter().toString());
+            editor.commit();
+        }else {
+            llm = new LinearLayoutManager(getContext());
+            rv.setLayoutManager(llm);
+            Log.w(TAG,"Nro. ITEMS: "+LISTA.size());
+            adapter = new rvAdapter(LISTA,getContext(),tvSize);
+            rv.setAdapter(adapter);
+            String msg;
+            msg = "Total de Animes: " + LISTA.size();
+            tvSize.setText(msg);
+            editor.putString(setup.general.adapter,""+rv.getAdapter().toString());
+            editor.commit();
+        }
+
     }
 
     private void initComponent(View view) {
         settings = getContext().getSharedPreferences(SHARED_KEY,0);
         editor = settings.edit();
+        GridType = settings.getBoolean(setup.tools.ITEM_TYPE,false);
         editor.putString(setup.general.adapter,null);
         editor.apply();
         animesDB = new AnimesDB(getContext());
@@ -157,6 +184,13 @@ public class ListFragment extends Fragment  {
         tvSize = (TextView) view.findViewById(R.id.tvSize);
         rv = (RecyclerView) view.findViewById(R.id.rvList);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        List<Animes> list = animesDB.getAnimes();
+//        for (Animes a: list){
+//            if (UtilsDate.differencesDate(a.getDateCreated(),a.getDateUpdate())>9){
+//                a.setStatus(getResources().getString(R.string.status_old));
+//
+//            }
+//        }
 
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.refresh),getResources().getColor(R.color.refresh1));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -166,12 +200,18 @@ public class ListFragment extends Fragment  {
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.changeDataItem(animesDB.getAnimes());
+                        if (GridType){
+                            adapter2.changeDataItem(animesDB.getAnimes());
+                        }else {
+                            adapter.changeDataItem(animesDB.getAnimes());
+                        }
+
                         refreshLayout.setRefreshing(false);
                     }
                 },setup.tools.TIME_THREAD);
             }
         });
+            Log.w(TAG,"GRID? "+GridType);
     }
 
 
@@ -180,7 +220,12 @@ public class ListFragment extends Fragment  {
     public void onResume() {
         super.onResume();
 
-         print(animesDB.getAnimes());
+        try {
+            print(animesDB.getAnimes());
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+
 
         Bundle bundle = new Bundle();
        String param = bundle.getString("edttext", "nada guardado");
@@ -199,31 +244,33 @@ public class ListFragment extends Fragment  {
         try {
             if (requestCode == setup.key.keyListEdit && resultCode == RESULT_OK) {
                 if (data!=null) {
-                    List<Animes> listAux = new ArrayList<>();
-                    Animes a = new Animes();
-                    int id = data.getIntExtra(setup.list.ID,-1);
-                    String name = data.getStringExtra(setup.list.NAME);
-                    String subName = data.getStringExtra(setup.list.SUB_NAME);
-                    String status = data.getStringExtra(setup.list.STATUS);
-                    int capitule = data.getIntExtra(setup.list.CAPITULE,-1);
-                    String color = data.getStringExtra(setup.list.COLOR);
-                    String dateCreated = data.getStringExtra(setup.list.DATE_CREATED);
-                    String dateUpdate = data.getStringExtra(setup.list.DATE_UPDATE);
-                    String image = data.getStringExtra(setup.list.IMAGE);
-
-                    a.setId(id);
-                    a.setName(name);
-                    a.setSubName(subName);
-                    a.setStatus(status);
-                    a.setCapitule(capitule);
-                    a.setColor(color);
-                    a.setDateCreated(dateCreated);
-                    a.setDateUpdate(dateUpdate);
-                    a.setImage(image);
-
-                    listAux.add(a);
-                    adapter.changeDataItem(listAux);
-                    print(listAux);
+                    Boolean editData = data.getBooleanExtra(setup.tools.RECHARGE_LIST,false);
+//                    List<Animes> listAux = new ArrayList<>();
+//                    Animes a = new Animes();
+//                    int id = data.getIntExtra(setup.list.ID,-1);
+//                    String name = data.getStringExtra(setup.list.NAME);
+//                    String subName = data.getStringExtra(setup.list.SUB_NAME);
+//                    String status = data.getStringExtra(setup.list.STATUS);
+//                    int capitule = data.getIntExtra(setup.list.CAPITULE,-1);
+//                    String color = data.getStringExtra(setup.list.COLOR);
+//                    String dateCreated = data.getStringExtra(setup.list.DATE_CREATED);
+//                    String dateUpdate = data.getStringExtra(setup.list.DATE_UPDATE);
+//                    String image = data.getStringExtra(setup.list.IMAGE);
+//
+//                    a.setId(id);
+//                    a.setName(name);
+//                    a.setSubName(subName);
+//                    a.setStatus(status);
+//                    a.setCapitule(capitule);
+//                    a.setColor(color);
+//                    a.setDateCreated(dateCreated);
+//                    a.setDateUpdate(dateUpdate);
+//                    a.setImage(image);
+//
+//                    listAux.add(a);
+//                    adapter.changeDataItem(listAux);
+                    if (editData)
+                        print(animesDB.getAnimes());
                 }
             }
             if (requestCode == setup.key.keyListAdd && resultCode == RESULT_OK) {
@@ -233,13 +280,21 @@ public class ListFragment extends Fragment  {
                         String xxxxxx = data.getStringExtra("xxxxx");
                     a.setName(xxxxxx);
                     listAux.add(a);
-                    adapter.addDataItem(listAux);
+                    if (GridType){
+                        adapter2.changeDataItem(listAux);
+                    }else {
+                        adapter.changeDataItem(listAux);
+                    }
                 }
             }
             if (requestCode == setup.key.keyListDelete && resultCode == RESULT_OK) {
                 if (data!=null) {
                     int pos = data.getIntExtra("xxxxx",-1);
-                    adapter.deleteDataItem(pos);
+                    if (GridType){
+                        adapter2.deleteDataItem(pos);
+                    }else {
+                        adapter.deleteDataItem(pos);
+                    }
                 }
             }
         }catch (NullPointerException e){

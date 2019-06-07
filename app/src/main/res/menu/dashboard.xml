@@ -16,17 +16,17 @@
         app:showAsAction="never">
 
         <item
-            android:id="@+id/action_or_container"
+            android:id="@+id/action_ord_name"
             android:title="Ordenar por Nombre"
             android:icon="@drawable/ic_back"
             app:showAsAction="never"/>
         <item
-            android:id="@+id/action_or_status"
+            android:id="@+id/action_ord_status"
             android:title="Ordenar por estatus"
             android:icon="@drawable/ic_back"
             app:showAsAction="never"/>
         <item
-            android:id="@+id/action_or_date"
+            android:id="@+id/action_ord_date"
             android:title="Ordenar por fecha"
             android:icon="@drawable/ic_back"
             app:showAsAction="never"/>

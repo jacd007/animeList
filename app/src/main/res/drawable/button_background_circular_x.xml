@@ -7,9 +7,9 @@
     <corners android:radius="9990dip"/>
     <gradient
         android:angle="270"
-        android:startColor="@color/colorPrimaryGreen"
-        android:centerColor="@color/colorAccentGreen"
-        android:endColor="@color/colorPrimaryDarkGreen"/>
+        android:startColor="@color/colorPrimaryRed"
+        android:centerColor="@color/colorAccentRed"
+        android:endColor="@color/colorPrimaryDarkRed"/>
     <padding
         android:left="0dip"
         android:top="0dip"

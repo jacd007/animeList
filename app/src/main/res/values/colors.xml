@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#55b53f</color>
-    <color name="colorPrimaryDark">#439f30</color>
+    <color name="colorPrimaryDark">#309f39</color>
     <color name="colorAccent">#56ff40</color>
 
     <color name="startDegrade">#56ff40</color>
@@ -18,7 +18,17 @@
     <color name="semiTrans">#71969696</color>
     <color name="semiTrans2">#1f000000</color>
     <color name="semi_trans2">#1f000000</color>
+    <color name="semi_black_trans">#80000000</color>
 
+    <color name="colorPrimaryRed">#b58e3f</color>
+    <color name="colorPrimaryDarkRed">#9f3630</color>
+    <color name="colorAccentRed">#ff6d40</color>
+
+    <color name="colorPrimaryGreen">#6cb53f</color>
+    <color name="colorPrimaryDarkGreen">#309f94</color>
+    <color name="colorAccentGreen">#40ff7c</color>
+
+    <color name="cvWhitoutColor">#909b9b9b</color>
     <color name="cvRed">#f77979</color>
     <color name="cvBlue">#88a0ff</color>
     <color name="cvYellow">#f5ff88</color>
@@ -27,8 +37,9 @@
     <color name="cvGreen">#63be5e</color>
     <color name="cvViolet">#b488ff</color>
     <color name="cvOrange">#ffae88</color>
-    <color name="cvPink">#ff88d9</color>
+    <color name="cvPink">#ff88c7</color>
 
+    <color name="trans_white">#92ffffff</color>
     <color name="hintGrey">#a5afafaf</color>
     <color name="hintBlack">#a5000000</color>
     <color name="hintBlue">#a58e9bce</color>
@@ -36,6 +47,10 @@
     <color name="backStar">#afd0fcc7</color>
     <color name="backCenter">#9692ba8a</color>
     <color name="backEnd">#96576854</color>
+
+    <color name="backStar3">#af93fd7d</color>
+    <color name="backCenter3">#67bc56</color>
+    <color name="backEnd3">#33632b</color>
 
     <color name="backStar2">#d1ffffff</color>
     <color name="backCenter2">#c1b1b1b1</color>
@@ -49,10 +64,23 @@
     <color name="cvPosGreen">#008402</color>
     <color name="cvPosViolet">#5600c6</color>
     <color name="cvPosOrange">#dc4600</color>
-    <color name="cvPosPink">#c60084</color>
+    <color name="cvPosPink">#c60056</color>
 
     <color name="refresh">#cee100</color>
     <color name="refresh1">#00e100</color>
 
+
+    <integer-array name="androidcolors">
+        <item>@color/cvRed</item>
+        <item>@color/cvBlue</item>
+        <item>@color/cvYellow</item>
+        <item>@color/cvWhite</item>
+        <item>@color/cvBlack</item>
+        <item>@color/cvGreen</item>
+        <item>@color/cvViolet</item>
+        <item>@color/cvOrange</item>
+        <item>@color/cvPink</item>
+        <item>@color/cvWhitoutColor</item>
+    </integer-array>
 
 </resources>

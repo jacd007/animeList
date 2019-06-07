@@ -57,7 +57,8 @@
                 app:srcCompat="@drawable/ic_menu"
                 app:backgroundTint="@color/colorPrimaryDark"
                 app:borderWidth="0dp"
-                app:fabSize="normal" />
+                app:fabSize="normal"
+                tools:ignore="VectorDrawableCompat" />
 
         </RelativeLayout>
 
@@ -78,6 +79,14 @@
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageView
+                android:id="@+id/tres"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_email" />
+
+            <ImageView
                 android:id="@+id/dos"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -85,13 +94,6 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_back_arrow" />
 
-            <!--<ImageView-->
-                <!--android:id="@+id/tres"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:scaleType="centerInside"-->
-                <!--android:src="@drawable/abc_ic_menu_selectall_mtrl_alpha" />-->
 
             <!--<ImageView-->
                 <!--android:id="@+id/cuatro"-->

@@ -226,6 +226,8 @@
     <string name="title_switch_notificacion">Habilitar / Desabilitar Notificaciones programadas</string>
     <string name="description_3">Permite crear notificaciones cada 12 horas desde el momento en que se habilita el servicio</string>
     <string name="description_2">Permite mover los textos de los titulos</string>
+    <string name="title_day_next">Domingo</string>
+    <string name="default_date">Día</string>
 
 
 </resources>

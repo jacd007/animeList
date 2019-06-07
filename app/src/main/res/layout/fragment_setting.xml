@@ -119,14 +119,14 @@
                 android:layout_height="0dp"
                 android:orientation="vertical">
                 <Switch
-                    android:id="@+id/swTextSize"
+                    android:id="@+id/swItemType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="2"
-                    android:text="Habilitar / Desabilitar  Multi-linea"/>
+                    android:text="Habilitar / Desabilitar  Tarjetas rectangulares"/>
 
                 <TextView
-                    android:id="@+id/tvDescription4"
+                    android:id="@+id/tvDescription5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:lines="4"
@@ -159,6 +159,34 @@
                     android:enabled="false"
                     android:layout_height="wrap_content" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.15"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+                <Switch
+                    android:id="@+id/swTextSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="Habilitar / Desabilitar  Multi-linea"/>
+
+                <TextView
+                    android:id="@+id/tvDescription4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="4"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/app_name"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/cvBlack"/>
             </LinearLayout>
             <!-- content -->
 

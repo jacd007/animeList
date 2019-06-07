@@ -53,45 +53,25 @@ public class UtilsDate {
         return (check == PackageManager.PERMISSION_GRANTED);
     }
 
-    /**
-     * Encode image Bitmap to Base64
-     *
-     * @param bm
-     * @return
-     */
-    public static String encodeImage(Bitmap bm) {
-        Log.w("encodeImage","image bounds: "+ bm.getWidth()+", "+bm.getHeight());
 
-        if (bm.getHeight() <= 400 && bm.getWidth() <= 400) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] b = baos.toByteArray();
-            return (Base64.encodeToString(b, Base64.DEFAULT)).replaceAll("\\n", "");
-        }
-        int mHeight=400;
-        int mWidth=400;
+    public static String textDate(int dias,String date){
 
-        if(bm.getHeight()>bm.getWidth()){
-          float div=(float)bm.getWidth()/((float) bm.getHeight());
-           float auxW=div*480;
-            mHeight=480;
-            mWidth=Math.round(auxW);
-            Log.w("encodeImage","new high: "+mHeight+" width: "+mWidth);
-        }
-        else{
-            float div= ((float) bm.getHeight())/(float)bm.getWidth();
-            float auxH=div*480;
-            mWidth=480;
-            mHeight=360;
-          mHeight=Math.round(auxH);
-            Log.w("encodeImage","new high: "+mHeight+" width: "+mWidth);
+        if (dias==0){
+            return "Hoy a las "+UtilsDate.changeData(date,setup.date.FORMAT,setup.date.HOUR_SHORT);
+        }else if (dias==1){
+            return "Ayer a las "+UtilsDate.changeData(date,setup.date.FORMAT,setup.date.HOUR_SHORT);
+        }else {
+            int semanas = (int) dias/7;
+            int difDias = (dias-(7*semanas));
+
+            String difSemanas = semanas>1? semanas+" semanas ": (semanas==0)?"":semanas+" semana ";
+            String difD = difDias>1?difDias+" dias ":(difDias==0?"":difDias+" dia ") ;
+            difD = (semanas!=0 && difDias!=0)?" y "+difD:difD;
+            String ff = UtilsDate.changeData(date,setup.date.FORMAT,setup.date.HOUR_SHORT);
+
+            return difSemanas+difD + ", "+ff;
         }
 
-        bm = Bitmap.createScaledBitmap(bm, mWidth, mHeight, false);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        return (Base64.encodeToString(b, Base64.DEFAULT)).replaceAll("\\n", "");
     }
 
     public static String dateFormatAll(String formate) {
@@ -290,13 +270,13 @@ public class UtilsDate {
         else return dias;
     }
 
-    public static String changeData(String dateOld){
+    public static String changeData(String dateOld,String originalFormat, String newFormat){
 //     dateOld =>  YYYY-MM-DD
         Date date = null;
         String resp = null;
 
-        SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat parseador = new SimpleDateFormat(originalFormat);
+        SimpleDateFormat formateador = new SimpleDateFormat(newFormat);
 
         try {
             date = parseador.parse(dateOld);

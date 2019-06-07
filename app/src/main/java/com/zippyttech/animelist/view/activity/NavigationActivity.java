@@ -1,17 +1,25 @@
 package com.zippyttech.animelist.view.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
@@ -35,6 +43,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.zippyttech.animelist.R;
+import com.zippyttech.animelist.common.utility.Utils;
+import com.zippyttech.animelist.common.utility.UtilsDate;
+import com.zippyttech.animelist.common.utility.UtilsImage;
+import com.zippyttech.animelist.view.dialog.DialogUser;
 import com.zippyttech.animelist.view.fragment.SettingFragment;
 import com.zippyttech.animelist.common.utility.SendEmail;
 import com.zippyttech.animelist.common.utility.setup;
@@ -44,11 +56,16 @@ import com.zippyttech.animelist.view.fragment.ListFragment;
 import com.zippyttech.animelist.view.fragment.MainFragment;
 import com.zippyttech.animelist.view.fragment.PerfilFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity
@@ -77,6 +94,17 @@ public class NavigationActivity extends AppCompatActivity
     private long mBackPressed;
     private String string;
     private SendEmail sendEmail;
+    private int mREQUEST_CODE_CAMERA=0;
+    private int mREQUEST_CODE_GALERY=10;
+
+    private static String APP_DIRECTORY = "MyPictureApp/";
+    private static String MEDIA_DIRECTORY = APP_DIRECTORY + "PictureApp";
+
+    private final int MY_PERMISSIONS = 100;
+    private final int PHOTO_CODE = 200;
+    private final int SELECT_PICTURE = 300;
+    private final int REQUEST_ACCESS_FINE = 0;
+    private String strB64;
 
 
     @Override
@@ -110,13 +138,14 @@ public class NavigationActivity extends AppCompatActivity
 
         uno = findViewById(R.id.uno);
         dos = findViewById(R.id.dos);
+        tres = findViewById(R.id.tres);
 //        cuatro = findViewById(R.id.cuatro);
-//        tres = findViewById(R.id.tres);
+
 
         fab.setOnClickListener(this);
         uno.setOnClickListener(this);
         dos.setOnClickListener(this);
-//        tres.setOnClickListener(this);
+        tres.setOnClickListener(this);
 //        cuatro.setOnClickListener(this);
 
          drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,16 +162,14 @@ public class NavigationActivity extends AppCompatActivity
         navUserName = (TextView) headerView.findViewById(R.id.nav_user_name);
         navUserEmail = (TextView) headerView.findViewById(R.id.nav_email_user);
         navImageUser =  (ImageView) headerView.findViewById(R.id.imageView);
+        navImageUser.setOnClickListener(this);
+        navUserEmail.setOnClickListener(this);
+        navImageUser.setOnClickListener(this);
 
         settings = getSharedPreferences(SHARED_KEY,0);
         editor = settings.edit();
-        Glide.with(this)
-                .load(R.drawable.ic_perfil)
-                .placeholder(R.drawable.ic_broken_image)
-                .error(R.drawable.ic_no_image)
-                .into(navImageUser);
-//        Picasso.get().load(R.drawable.ic_perfil).placeholder(R.drawable.ic_broken_image).
-//                error(R.drawable.ic_no_image).into(navImageUser);
+        String ima = settings.getString(setup.general.image,"null");
+        setImage(this,ima,navImageUser);
         setFragment(1);
         if (animesDB.getSizeDB()<1){
             ActionBar actionBar = getSupportActionBar();
@@ -157,6 +184,45 @@ public class NavigationActivity extends AppCompatActivity
         }
 
 
+    }
+
+    private void setImage(Context context, String dateImage, ImageView ivView){
+        try {
+            if (!dateImage.equals("null")) {
+                if (!dateImage.contains("http")) {
+                    if (!dateImage.substring(0, 23).equals("data:image/jpeg;base64,")) {
+                        dateImage = context.getResources().getString(R.string.image_complement) + dateImage;
+                    }
+                    Bitmap bitmap = UtilsImage.b64ToBitmap(dateImage);
+                    ivView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 400, 400, false));
+                } else {
+                    Glide.with(context)
+                            .load(dateImage)
+                            .placeholder(R.drawable.ic_broken_image)
+                            .error(R.drawable.ic_no_image)
+                            .into(ivView);
+                }
+            }else {
+                Glide.with(context)
+                        .load("xxxx")
+                        .error(R.drawable.ic_broken_image)
+                        .into(ivView);
+            }
+        }catch (VerifyError e){
+            ivView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_no_image));
+            e.printStackTrace();
+            Log.e("setImage",e.getMessage());
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            Glide.with(context)
+                    .load(dateImage)
+                    .placeholder(R.drawable.ic_broken_image)
+                    .error(R.drawable.ic_no_image)
+                    .into(ivView);
+            Log.e("setImage",e.getMessage());
+        }catch (NullPointerException e){
+            Log.e("setImage",e.getMessage());
+        }
     }
 
 //    @Override
@@ -176,6 +242,10 @@ public class NavigationActivity extends AppCompatActivity
         }
         else {
             if (settings.getBoolean(setup.tools.ENABLED_BACK,false)){
+//                sendEmail.Email("jacd0107@gmail.com",
+//                        "Lista del "+ UtilsDate.dateFormatAll(setup.date.FORMAT_SIMPLE),
+//                        "\n"+Utils.getListAn(animesDB.getAnimes()).replaceAll(",",",\n"));
+
                 finish();
             }else {
                 setFragment(1);
@@ -185,6 +255,8 @@ public class NavigationActivity extends AppCompatActivity
 
         mBackPressed = System.currentTimeMillis();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -217,11 +289,77 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.act_settings) {
-            return true;
+        switch (id){
+            case R.id.action_ord_name:
+                ordenarList(0);
+                break;
+            case R.id.action_ord_status:
+                ordenarList(1);
+                break;
+            case R.id.action_ord_date:
+                ordenarList(2);
+                break;
         }
+//        if (id == R.id.act_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void ordenarList(int i) {
+            //TODO: ordenamiendo de la lista
+            final String FORMAT = setup.date.FORMAT;
+
+            switch (i){
+                case 0:
+
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+                    //por fecha
+                    final int today = Utils.Epoch( Utils.dateFormatAll(FORMAT) , FORMAT );
+                    List<Animes> list = animesDB.getAnimes();
+                    Collections.sort(list, new Comparator<Animes>() {
+                        @Override
+                        public int compare(Animes o1, Animes o2) {
+                            int rsp,infinite;
+                            infinite=today+today+today+today;
+                            int va1=0;
+                            int va2=0;
+                            String aux1 = ""+o1.getDateUpdate();
+                            String aux2 = ""+o2.getDateUpdate();
+                            try{
+                                va1 = aux1.equals("null")?(infinite):Utils.Epoch(o1.getDateUpdate(), FORMAT);
+                                va2 = aux2.equals("null")?(infinite):Utils.Epoch(o2.getDateUpdate(),FORMAT);
+                            }catch (NullPointerException e){
+                                e.printStackTrace();
+                            }
+
+                            if (va1 < va2) {
+                                rsp = 1;
+                            } else if (va1 > va2) {
+                                rsp = -1;
+                            } else {
+                                rsp = 0;
+                            }
+                            return rsp;
+                        }
+                    });
+                    if (settings.getBoolean(setup.tools.ITEM_TYPE,false)){
+                        ListFragment.adapter2.changeDataItem(list);
+                        ListFragment.adapter2.notifyDataSetChanged();
+                    }else{
+                        ListFragment.adapter.changeDataItem(list);
+                        ListFragment.adapter.notifyDataSetChanged();
+                    }
+                    break;
+            }
+
+
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -396,12 +534,136 @@ public class NavigationActivity extends AppCompatActivity
 //                Snackbar.make(v, "No funcion...", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 break;
+            case R.id.tres:
+                if (settings.getBoolean(setup.tools.ENABLED_EMAIL,false)){
+                    Toast.makeText(this, "Enviando email a "+settings.getString(setup.general.UserEmail,"jacd0107@gmail.com"), Toast.LENGTH_SHORT).show();
+                    sendEmail.Email(settings.getString(setup.general.UserEmail,"jacd0107@gmail.com"),
+                            "Lista del "+ UtilsDate.dateFormatAll(setup.date.FORMAT_SIMPLE),
+                            "\n"+Utils.getListAn(animesDB.getAnimes()));
+                    morph.hide();
+                }else {
+                    Snackbar.make(v, "Habilite ésta opción en \"Configuración\".", Snackbar.LENGTH_LONG)
+                            .setAction("SendEmail", null).show();
+                }
+
+                break;
+            case  R.id.imageView:
+                    LoadImage1(this);
+                break;
+            case R.id.nav_email_user:
+                EditText();
+                break;
+            case R.id.nav_user_name:
+                EditText();
+                break;
             default:
                 morph.hide();
                 break;
         }
     }
 
+    private void EditText() {
+        new DialogUser(this);
+    }
+
+    private void LoadImage1(final Context context){
+
+        final CharSequence[] opciones={"Tomar Foto","Cargar Imagen","Cancelar"};
+        final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(context);
+        alertOpciones.setTitle("Seleccione una opción");
+        alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(opciones[i].equals("Tomar Foto")){
+                    CameraE();
+                }else{
+                    if(opciones[i].equals("Cargar Imagen")){
+                        try {
+                            loadImageEst();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }else{
+                        dialogInterface.dismiss();
+                    }
+                }
+            }
+        });
+        alertOpciones.show();
+    }
+
+    private void loadImageEst() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+
+        }else{
+            try {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent,"Seleccione la aplicación"),mREQUEST_CODE_GALERY);
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, "Error al abrir la galeria...", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    public void CameraE(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},REQUEST_ACCESS_FINE);
+
+        }else{
+            try {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, mREQUEST_CODE_CAMERA);
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, "Error al abrir la camara...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_ACCESS_FINE){
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                try {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, mREQUEST_CODE_CAMERA);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error al abrir la camara...", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(this, "Permiso de la camara denegado", Toast.LENGTH_SHORT).show();
+            }
+
+        }else if (requestCode == 1){
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                try {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(Intent.createChooser(intent,"Seleccione la aplicación"),mREQUEST_CODE_GALERY);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error en el permiso de almacenamiento...", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(this, "Permiso de lectura de almacenamiento denegado", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
 
     @Override
     protected void onStop() {
@@ -428,11 +690,57 @@ public class NavigationActivity extends AppCompatActivity
                     Toast.makeText(this, "no hubo ningun cambio", Toast.LENGTH_SHORT).show();
                 }
             }
+            Bitmap bitmap;
+            if ((resultCode == RESULT_OK) && (requestCode==mREQUEST_CODE_GALERY)) {
+                Uri path = data.getData();
+                navImageUser.setImageURI(path);
+                String strDir = "file/"+path.toString().substring(8)+".png";
+                try {
+                    Log.w(TAG,"pollo: "+strDir);
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), path);
+                    strB64 = UtilsImage.BitmapToBase64(bitmap);
+                    editor.putString(setup.general.image,strB64);
+                    editor.commit();
+                    editor.apply();
+                    Log.w(TAG,"JSON EDITAR galeria: "+strB64);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }else if ((resultCode == RESULT_OK) && (requestCode==mREQUEST_CODE_CAMERA)) {
+                try {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                    strB64 = UtilsImage.BitmapToBase64(bitmap);
+//                    getSupportActionBar().setIcon(UtilsImage.);
+                    navImageUser.setImageBitmap(bitmap);
+                    if (!strB64.contains("data:image/png;base64,")){
+                        strB64 = getResources().getString(R.string.image_complement) + strB64;
+                        Log.w(TAG,"IMAGEN CAMERA: "+strB64);
+                    }
+                    editor.putString(setup.general.image,strB64);
+                    editor.commit();
+                    editor.apply();
+
+                }catch (NullPointerException e){
+                    Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
         }catch (NullPointerException e){
             e.printStackTrace();
             Toast.makeText(this, "No se pudo realizar esta operación.", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String ima = settings.getString(setup.general.image,"null");
+        String email = settings.getString(setup.general.UserEmail,"null");
+        String user = settings.getString(setup.general.UserName,"null");
+        setImage(this,ima,navImageUser);
+        navUserEmail.setText(email);
+        navUserName.setText(user);
     }
 
     public void alertDialogWarning(){

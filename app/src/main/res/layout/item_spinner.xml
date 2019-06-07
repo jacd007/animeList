@@ -2,10 +2,11 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="18sp"
+    android:textSize="15sp"
     android:textColor="#ffffff"
-    android:textStyle="bold"
+    android:textStyle="normal"
+    android:gravity="center|top"
     android:padding="10dp"
     android:background="@drawable/border_dropdown_spinner"
-    android:drawableLeft="@drawable/ic_menu"
+    android:drawableLeft="@drawable/ic_item_arrow_right_white"
     xmlns:android="http://schemas.android.com/apk/res/android" />

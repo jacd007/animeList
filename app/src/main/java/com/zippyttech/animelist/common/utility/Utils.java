@@ -6,50 +6,35 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.se.omapi.Session;
 import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.zippyttech.animelist.R;
 import com.zippyttech.animelist.model.Animes;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.StringReader;
 import java.io.StringWriter;
-import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,14 +78,14 @@ public class Utils {
 
     }
 
-    public static void createFileAnimeListDB(Context context, String text,String name,String extention){
+    public static void createFileAnimeListDB(Context context, String text,String name,String extend){
         try {
             File nuevaCarpeta = new File(Environment.getExternalStorageDirectory(), "AnimeListDB");
             if (!nuevaCarpeta.exists()) {
                 nuevaCarpeta.mkdir();
             }
 
-            String FULLNAME = name + "."+extention;
+            String FULLNAME = name + "."+extend;
             try {
                 File file = new File(nuevaCarpeta, FULLNAME);
                 file.createNewFile();
@@ -118,6 +103,39 @@ public class Utils {
         } catch (Exception e) {
             Log.e("Error", "e: " + e);
         }
+    }
+
+    public static String getListAn(List<Animes> list) {
+        StringBuilder lista = new StringBuilder();
+        Iterator<Animes> iterator = list.iterator();
+        for (Animes a: list){
+            try {
+                JSONObject js = new JSONObject();
+
+                js.put("Tipo:","Valor");
+                js.put("Id",a.getId());
+                js.put("Nombre",a.getName());
+                js.put("Imagen",a.getImage());
+                js.put("Capitulo", a.getCapitule());
+                js.put("Estado", a.getStatus());
+                js.put("Proximo Episodio",a.getDay());
+                js.put("Color",a.getColor());
+                js.put("Fecha de Creación",UtilsDate.reformateDate(a.getDateCreated(),setup.date.FORMAT,setup.date.FORMAT_SIMPLE2));
+                js.put("Fecha Actualizada", UtilsDate.reformateDate(a.getDateUpdate(),setup.date.FORMAT,setup.date.FORMAT_SIMPLE2));
+
+                if(iterator.hasNext()){
+                    lista.append(js.toString()).append(",");
+                }else {
+                    lista.append(js.toString()).append("\n");
+                }
+
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+        return lista.toString().replaceAll(",",",\n").replaceAll("\"Tipo:\":\"Valor\",","");
     }
 
     public static int getColorList(String color){

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.zippyttech.animelist.R;
 import com.zippyttech.animelist.common.SyncService;
+import com.zippyttech.animelist.common.utility.Utils;
 import com.zippyttech.animelist.common.utility.setup;
 import com.zippyttech.animelist.data.AnimesDB;
 import com.zippyttech.animelist.model.Animes;
@@ -34,7 +35,7 @@ public class SettingFragment extends Fragment {
     private static final String SHARED_KEY = "shared_key";
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
-    private Switch sEmail,sMoved,sNotification,sTextSize;
+    private Switch sEmail,sMoved,sNotification,sTextSize,sItemType;
     private TextView tvD1,tvD2,tvD3;
     private EditText etContent;
 
@@ -47,6 +48,7 @@ public class SettingFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
 
     public SettingFragment() {
         // Required empty public constructor
@@ -98,6 +100,7 @@ public class SettingFragment extends Fragment {
         sMoved = (Switch) view.findViewById(R.id.swTextMoved);
         sNotification = (Switch) view.findViewById(R.id.swNotification);
         sTextSize = (Switch) view.findViewById(R.id.swTextSize);
+        sItemType = (Switch) view.findViewById(R.id.swItemType);
 
         tvD1 = (TextView) view.findViewById(R.id.tvDescription1);
         tvD2 = (TextView) view.findViewById(R.id.tvDescription2);
@@ -107,7 +110,10 @@ public class SettingFragment extends Fragment {
 
         sEmail.setChecked(settings.getBoolean(setup.tools.ENABLED_EMAIL,false));
         sMoved.setChecked(settings.getBoolean(setup.tools.ENABLED_MOVED,false));
+        sTextSize.setChecked(settings.getBoolean(setup.tools.ENABLED_TEXTSIZE,false));
         sNotification.setChecked(settings.getBoolean(setup.tools.ENABLED_NOTIFICACION,false));
+        sItemType.setChecked(settings.getBoolean(setup.tools.ITEM_TYPE,false));
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -122,8 +128,13 @@ public class SettingFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor.putBoolean(setup.tools.ENABLED_EMAIL,sEmail.isChecked());
+                etContent.setEnabled(sEmail.isChecked());
                 editor.commit();
                 editor.apply();
+                if (sEmail.isChecked())
+                    Utils.createFileAnimeListDB(getContext(),Utils.getListAn(animesDB.getAnimes()),"data","json");
+//                    Log.w(TAG,"//---//\n"+ Utils.getListAn(animesDB.getAnimes()));
+
                 Log.w(TAG,"\nEMAIL: "+settings.getBoolean(setup.tools.ENABLED_EMAIL,false));
             }
         });
@@ -159,6 +170,15 @@ public class SettingFragment extends Fragment {
                     getContext().stopService(new Intent(getContext(), SyncService.class));
                 }
 
+            }
+        });
+        sItemType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editor.putBoolean(setup.tools.ITEM_TYPE,sItemType.isChecked());
+                editor.commit();
+                editor.apply();
+                Log.w(TAG,"\nTextSize: "+settings.getBoolean(setup.tools.ITEM_TYPE,false));
             }
         });
     }
